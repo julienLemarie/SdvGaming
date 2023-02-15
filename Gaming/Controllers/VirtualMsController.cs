@@ -72,11 +72,9 @@ namespace Gaming.Controllers
 
                 azureTools.CreateVirtualMachine(resourceGroup, virtualM.Login, virtualM.Password);
 
-
-                // Données temporaire en attendant la méthode de création d'une VM
-                virtualM.Name = GetUserName();
-                virtualM.IP = "192.168.1.1";
+                virtualM.Name = GetUserName();                
                 virtualM.IsStarted = true;
+                virtualM.IP = "192.168.1.1"; // TODO: get the ip address
 
                 _context.Add(virtualM);
                 await _context.SaveChangesAsync();

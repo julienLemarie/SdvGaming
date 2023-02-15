@@ -26,7 +26,7 @@ namespace Gaming.Tools
         }
 
         public async Task<ResourceGroupResource> GetResourceGroupAsync()
-        {         
+        {
 
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 
@@ -177,5 +177,30 @@ namespace Gaming.Tools
                 }).Value;
         }
 
+        public async void VmPowerOnAsync()
+        {
+            ResourceGroupResource resourceGroup = await GetResourceGroupAsync();
+
+            var vms = resourceGroup.GetVirtualMachines();
+            await vms.First().PowerOnAsync(WaitUntil.Completed);
+        }
+
+        public async void VmPowerOffsync()
+        {
+            ResourceGroupResource resourceGroup = await GetResourceGroupAsync();
+
+            var vms = resourceGroup.GetVirtualMachines();
+            await vms.First().PowerOffAsync(WaitUntil.Completed);
+        }
+
+        public async Task<string> GetIpAdress(string ipName)
+        {
+            ResourceGroupResource resourceGroup = await GetResourceGroupAsync();
+
+            var publicIPAddresses = resourceGroup.GetPublicIPAddresses();
+            PublicIPAddressResource publicIPAddress = publicIPAddresses.Get(ipName);
+
+            return publicIPAddress.Data.IPAddress;
+        }
     }
 }
