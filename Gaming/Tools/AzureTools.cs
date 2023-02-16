@@ -50,6 +50,7 @@ namespace Gaming.Tools
             // Return new resource group
             return await resourceGroups.GetAsync(resourceGroupName);
 
+
         }
 
         private PublicIPAddressResource CreatePublicIp(ResourceGroupResource resourceGroup)

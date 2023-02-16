@@ -12,6 +12,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Gaming.Controllers
 {
+    [TypeFilter(typeof(AuthorizationFilter))]
     public class VirtualMsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +26,7 @@ namespace Gaming.Controllers
         public async Task<IActionResult> Index()
         {
             return _context.VirtualMs != null ?
-                        View(await _context.VirtualMs.ToListAsync()) :
+                        View(await _context.VirtualMs.Where(v => v.Name == GetUserName()).ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.VirtualMs'  is null.");
         }
 
@@ -72,7 +73,7 @@ namespace Gaming.Controllers
 
                 azureTools.CreateVirtualMachine(resourceGroup, virtualM.Login, virtualM.Password);
 
-                virtualM.Name = GetUserName();                
+                virtualM.Name = GetUserName();
                 virtualM.IsStarted = true;
                 virtualM.IP = "192.168.1.1"; // TODO: get the ip address
 
