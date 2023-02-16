@@ -49,10 +49,7 @@ resource "azurerm_mssql_server" "gaming_1" {
   version                      = "12.0"
   administrator_login          = var.db_login
   administrator_login_password = var.db_password
-
-  tags = {
-    environment = "production"
-  }
+  // TODO Add firewall rule to allow connection from Visual Studio
 }
 
 resource "azurerm_mssql_database" "gaming_1" {
@@ -64,4 +61,13 @@ resource "azurerm_mssql_database" "gaming_1" {
   read_scale     = false
   sku_name       = "S0"
   zone_redundant = false
+}
+
+# The Azure feature Allow access to Azure services can be enabled by setting start_ip_address and end_ip_address to 0.0.0.0
+resource "azurerm_sql_firewall_rule" "gaming_1" {
+  name                = "FirewallRule1"
+  resource_group_name = azurerm_resource_group.gaming_1.name
+  server_name         = azurerm_sql_server.gaming_1.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
 }

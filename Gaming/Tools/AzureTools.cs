@@ -12,6 +12,10 @@ namespace Gaming.Tools
 {
     public class AzureTools
     {
+        private const string TENANT_ID = "";
+        private const string SUBSCRIPTION_ID = "";
+        private const string CLIENT_ID = "";
+        private const string CLIENT_SECRET = "";
 
         private SubscriptionResource subscription;
         private string resourceName;
@@ -19,8 +23,11 @@ namespace Gaming.Tools
 
         public AzureTools(string resourceName)
         {
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
-            subscription = client.GetDefaultSubscription();
+            //ArmClient client = new ArmClient(new DefaultAzureCredential());
+            //subscription = client.GetDefaultSubscription();
+
+            ArmClient client = new(new ClientSecretCredential(TENANT_ID, CLIENT_ID, CLIENT_SECRET));
+            subscription = client.GetSubscriptions().Get(SUBSCRIPTION_ID);
 
             this.resourceName = resourceName;
         }
