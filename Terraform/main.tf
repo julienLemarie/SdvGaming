@@ -67,7 +67,7 @@ resource "azurerm_mssql_database" "gaming_1" {
 resource "azurerm_sql_firewall_rule" "gaming_1" {
   name                = "FirewallRule1"
   resource_group_name = azurerm_resource_group.gaming_1.name
-  server_name         = azurerm_sql_server.gaming_1.name
+  server_name         = azurerm_mssql_server.gaming_1.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 }
