@@ -163,7 +163,10 @@ namespace Gaming.Tools
                     },
                     StorageProfile = new VirtualMachineStorageProfile()
                     {
-                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage),
+                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                        {
+                            DeleteOption = DiskDeleteOptionType.Delete,
+                        },
                         ImageReference = new ImageReference()
                         {
                             Offer = "UbuntuServer",
